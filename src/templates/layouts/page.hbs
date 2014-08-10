@@ -1,0 +1,24 @@
+{{>site-header}}
+  <div class="page-content">
+    {{#each tags}}
+      {{#is tag "BlogPost"}}
+        <h2>Posts</h2>
+        <ul>
+          {{#withSort pages "data.posted"}}
+            <li>
+              <a href="{{fileref dest}}">{{data.title}}</a>
+            </li>
+          {{/withSort}}
+        </ul>
+      {{/is}}
+    {{/each}}
+
+    <h2>Post: {{ title }}</h2>
+    <h3>{{formatDate posted "%m/%d/%Y"}}</h3>
+    {{#markdown}}
+      {{> body}}
+    {{/markdown}}
+
+  </div>
+
+{{>site-footer}}
