@@ -10,7 +10,6 @@ module.exports = function(grunt) {
     assemble: {
       options: {
         // specified main template
-        layout: 'page.hbs',
         layoutdir: './src/templates/layouts/',
 
         partials:  './src/templates/partials/**/*.hbs',
@@ -22,27 +21,38 @@ module.exports = function(grunt) {
         ]
       },
 
-      // assemble content: build everything in content/
-      content: {
+      // assemble blog: build everything in content/blog
+      blog: {
+        options: {
+          layout: 'blog.hbs',
+        },
         files: [
           {
             cwd: './src/content/',
             dest: './dist/',
             expand: true,
-            src: ['**/*.hbs', '**/*.md', '!_pages/**/*.hbs'] // skips content/_pages/, which is handled separately below
-          }, {
+            src: ['blog/**/*.hbs', 'blog/**/*.md']
+          }
+        ]
+      },
+
+      pages: {
+        options: {
+          layout: 'index.hbs'
+        },
+        files: [
+          {
             cwd: './src/content/_pages/',
             dest: './dist/',
             expand: true,
-            src: '**/*.hbs'
+            src: ['**/*.hbs', '**/*.md']
           }
         ]
       }
     },
 
-    /**
-     * Lint all JavaScript
-     */
+
+    // dev-dependency: Lint all JavaScript
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -65,6 +75,7 @@ module.exports = function(grunt) {
       }
     },
 
+
     // dev-dependency: grunt-watch looks for changes to files and automatically causes an appropriate re-assemble,
     //                 which is then automatically re-served using grunt-express.
     watch: {
@@ -76,7 +87,7 @@ module.exports = function(grunt) {
           'src/content/**/*.hbs',
           'src/content/**/*.md'
         ],
-        tasks: ['assemble:content'],
+        tasks: ['assemble:blog', 'assemble:pages'],
         options: {
           port: DEV_HTTP_PORT,
         },
