@@ -100,6 +100,15 @@ module.exports = function(grunt) {
       }
     },
 
+    copy: {
+      main: {
+        files: [
+          // includes files within path and its sub-directories
+          {expand: true, cwd: 'src/assets/', src: ['**'], dest: 'dist/assets'}
+        ]
+      }
+    },
+
 
     // dev-dependency: serve pages locally (uses grunt-watch's livereload to reload js inline)
     express: {
@@ -156,6 +165,7 @@ module.exports = function(grunt) {
   /* load every plugin in package.json */
   grunt.loadNpmTasks('assemble');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -169,6 +179,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'build_js',
     'less:development',
+    'copy',
     'assemble',
     'express',
     'watch'
