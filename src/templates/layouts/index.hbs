@@ -1,27 +1,6 @@
 {{>site-header}}
-  <h1>This is the main layout</h1>
-  <div>Find it at templates/layouts/index.hbs</div>
-
-  <hr/>
   <div class="page-content">
-    {{#markdown}}
       {{> body}}
-    {{/markdown}}
-  </div>
-
-  <hr/>
-  <div class="site-map">
-    Main Layout Pages:
-    <ul>
-      {{#each pages}}
-        <li><a href="{{fileref dest}}">{{data.title}}</a> </li>
-      {{/each}}
-      <li>
-        <a href="/blog/">Blog</a>
-        <!-- The blog uses a different assemble sub-target, so it's pages aren't in the main pages collection.
-             For different layouts, need to hard-link into them. -->
-      </li>
-    </ul>
   </div>
 
 {{>site-footer}}

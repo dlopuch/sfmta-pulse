@@ -2,8 +2,10 @@ module.exports = function(grunt) {
 
   // Add Bower javascript dependencies to concatenate and minify into dist/js/libs.js
   var BOWER_JS_LIBS = [
-    './bower_components/jquery/jquery.js',
-    './bower_components/bootstrap/dist/js/bootstrap.js'
+    './bower_components/jquery/dist/jquery.min.js',
+    './bower_components/bootstrap/dist/js/bootstrap.js',
+    './bower_components/d3/d3.min.js',
+    './bower_components/lodash/dist/lodash.min.js'
   ];
 
   var DEV_HTTP_PORT = 8000;
@@ -24,21 +26,6 @@ module.exports = function(grunt) {
           // load all helpers from `handlebars-helpers` npm module
           //'handlebars-helpers/**/helpers-*.js',
           'src/helpers/**/*.js'
-        ]
-      },
-
-      // assemble blog: build everything in content/blog
-      blog: {
-        options: {
-          layout: 'blog.hbs',
-        },
-        files: [
-          {
-            cwd: './src/content/',
-            dest: './dist/',
-            expand: true,
-            src: ['blog/**/*.hbs', 'blog/**/*.md']
-          }
         ]
       },
 
@@ -95,7 +82,7 @@ module.exports = function(grunt) {
     // concatenate all javascript together
     concat: {
       options: {
-        separator: ';'
+        separator: ';\n'
       },
       js_libs: {
         src: BOWER_JS_LIBS,
@@ -137,7 +124,7 @@ module.exports = function(grunt) {
           'src/content/**/*.hbs',
           'src/content/**/*.md'
         ],
-        tasks: ['assemble:blog', 'assemble:pages'],
+        tasks: ['assemble:pages'],
         options: {
           port: DEV_HTTP_PORT,
         },
@@ -178,7 +165,7 @@ module.exports = function(grunt) {
 
   /* grunt tasks */
   grunt.registerTask('start', ['default', 'open']);
-  grunt.registerTask('build_js', ['jshint', 'concat:js_libs', 'uglify:js_libs']);
+  grunt.registerTask('build_js', ['jshint', 'concat:js_libs']);
   grunt.registerTask('default', [
     'build_js',
     'less:development',

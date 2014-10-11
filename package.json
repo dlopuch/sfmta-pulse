@@ -1,7 +1,7 @@
 {
-  "name": "minimal-assemble-blog-boilerplate",
+  "name": "sfmta-pulse",
   "version": "0.0.1",
-  "description": "Example Grunt build scripts to build a template-driven blog",
+  "description": "D3 + geojson + sf mta data",
   "main": "index.js",
   "scripts": {
     "test": "test"
