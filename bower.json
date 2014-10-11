@@ -1,0 +1,21 @@
+{
+  "name": "minimal-assemble-blog-boilerplate",
+  "version": "0.0.1",
+  "description": "Example Grunt build scripts to build a template-driven blog",
+  "homepage": "https://github.com/dlopuch/minimal-assemble-blog-boilerplate",
+  "authors": [
+    "Dan Lopuch <dlopuch@gmail.com>"
+  ],
+  "license": "GPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}

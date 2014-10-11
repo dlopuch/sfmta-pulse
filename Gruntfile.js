@@ -1,5 +1,11 @@
 module.exports = function(grunt) {
 
+  // Add Bower javascript dependencies to concatenate and minify into dist/js/libs.js
+  var BOWER_JS_LIBS = [
+    './bower_components/jquery/jquery.js',
+    './bower_components/bootstrap/dist/js/bootstrap.js'
+  ];
+
   var DEV_HTTP_PORT = 8000;
 
   require('time-grunt')(grunt);
@@ -52,6 +58,29 @@ module.exports = function(grunt) {
     },
 
 
+    // less -- css preparser, builds Bootstrap (brought in via Bower and style.less)
+    // less:development just compiles less, less:production minifies it
+    less: {
+      development: {
+        files: {
+          "./dist/css/style.css": ["./src/css/style.less"]
+        }
+      },
+      production: {
+        options: {
+          cleancss: true, //minifies the result
+          modifyVars: {
+            // eg:
+            //imgPath: '"http://mycdn.com/path/to/images"',
+            //bgColor: 'red'
+          }
+        },
+        files: {
+          "./dist/css/style.min.css": ["./src/css/style.less"]
+        }
+      }
+    },
+
     // dev-dependency: Lint all JavaScript
     jshint: {
       options: {
@@ -61,6 +90,27 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'src/**/*.js',
       ]
+    },
+
+    // concatenate all javascript together
+    concat: {
+      options: {
+        separator: ';'
+      },
+      js_libs: {
+        src: BOWER_JS_LIBS,
+        dest: './dist/js/libs.js'
+      }
+    },
+
+    uglify: {
+      options: {
+        mangle: false  // Use if you want the names of your functions and variables unchanged
+      },
+      js_libs: {
+        src:  './dist/js/libs.js',
+        dest: './dist/js/libs.js'
+      }
     },
 
 
@@ -92,6 +142,13 @@ module.exports = function(grunt) {
           port: DEV_HTTP_PORT,
         },
       },
+      css: {
+        files: [
+          'src/css/**/*.css',
+          'src/css/**/*.less'
+        ],
+        tasks: ['less:development']
+      },
       livereload: {
         // Here we watch the files the assemble task will compile to
         // These files are sent to the live reload server after assemble builds to them
@@ -111,18 +168,23 @@ module.exports = function(grunt) {
 
   /* load every plugin in package.json */
   grunt.loadNpmTasks('assemble');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express');
   grunt.loadNpmTasks('grunt-open');
 
   /* grunt tasks */
+  grunt.registerTask('start', ['default', 'open']);
+  grunt.registerTask('build_js', ['jshint', 'concat:js_libs', 'uglify:js_libs']);
   grunt.registerTask('default', [
-    'jshint',
+    'build_js',
+    'less:development',
     'assemble',
     'express',
     'watch'
   ]);
-  grunt.registerTask('start', ['default', 'open']);
 
 };
