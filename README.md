@@ -1,4 +1,4 @@
-### minimal-assemble-blog-boilerplate
+# minimal-assemble-blog-boilerplate
 
 A static site generator and build system using only Javascript tooling.
 
@@ -10,7 +10,7 @@ how to use it.  Most static site generators out there point to using [Jekyll](ht
 but I was looking for a purely javascript-based solution to avoid mixing Ruby with Grunt/Javascript tooling in the
 same environment.
 
-### Features
+## Features
 - **Javascript only!**
     - Grunt is used for build scripts and all assembly.
     - Bower is used for dependency management.
@@ -21,12 +21,12 @@ same environment.
     - Includes building **[Bootstrap](http://getbootstrap.com/)**, meaning you can include your own themes and variable
       overrides.
 - Javascript concatenation and minification
-- Includes local webserver with File Watching and Live Reload
+- Includes **local webserver** with File Watching and Live Reload
     - Build the site then serve it on localhost to **avoid browser request security restrictions**
-    - **Watch for changes** to any files and automatically rebuild in the background
+    - **Watches** for changes to any files then **automatically rebuilds in the background**
     - **Live Reload** automatically refreshes your browser tab with the updated assets!
 
-### To Use
+## To Use
 - `$ npm install`
 - `$ bower install` (assuming you have bower installed globally)
 - `$ grunt`
