@@ -1,7 +1,3 @@
----
-title: "README"
----
-
 ### minimal-assemble-blog-boilerplate
 
 A static site generator and build system using only Javascript tooling.
@@ -24,6 +20,7 @@ same environment.
 - **[LESS CSS pre-parser](http://lesscss.org/)**
     - Includes building **[Bootstrap](http://getbootstrap.com/)**, meaning you can include your own themes and variable
       overrides.
+- Javascript concatenation and minification
 - Includes local webserver with File Watching and Live Reload
     - Build the site then serve it on localhost to **avoid browser request security restrictions**
     - **Watch for changes** to any files and automatically rebuild in the background
