@@ -101,12 +101,18 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      main: {
+      assets: {
         files: [
           // includes files within path and its sub-directories
           {expand: true, cwd: 'src/assets/', src: ['**'], dest: 'dist/assets'}
         ]
-      }
+      },
+      js: {
+        files: [
+          // includes files within path and its sub-directories
+          {expand: true, cwd: 'src/js/', src: ['**'], dest: 'dist/js'}
+        ]
+      },
     },
 
 
@@ -145,6 +151,12 @@ module.exports = function(grunt) {
         ],
         tasks: ['less:development']
       },
+      js: {
+        files: [
+          'src/js/**/*.js'
+        ],
+        tasks: ['copy:js']
+      },
       livereload: {
         // Here we watch the files the assemble task will compile to
         // These files are sent to the live reload server after assemble builds to them
@@ -178,8 +190,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build_js', ['jshint', 'concat:js_libs']);
   grunt.registerTask('default', [
     'build_js',
+    'copy:js',
     'less:development',
-    'copy',
+    'copy:assets',
     'assemble',
     'express',
     'watch'
